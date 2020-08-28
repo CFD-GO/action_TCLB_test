@@ -9,6 +9,7 @@ inputs:
       The branch, tag or SHA to checkout. When checking out the repository that
       triggered a workflow, this defaults to the reference or SHA for that
       event.  Otherwise, uses the default branch.
+    default: master
   token:
     description: >
       Personal access token (PAT) used to fetch the repository. The PAT is configured
@@ -21,5 +22,9 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - run: ${{ github.action_path }}/tools/clone.sh "${{ inputs.repository }}" "${{ inputs.ref }}"
+      shell: bash
+    - run: cd TCLB && ./configure --disable-cuda
+      shell: bash
     - run: ${{ github.action_path }}/tools/test.sh
       shell: bash
