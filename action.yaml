@@ -22,6 +22,8 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - run: rm "*"
+      shell: bash
     - run: ${{ github.action_path }}/tools/clone.sh "${{ inputs.repository }}" "${{ inputs.ref }}"
       shell: bash
     - run: |
