@@ -22,7 +22,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: rm "*"
+    - run: rm "-rf" "*"
       shell: bash
     - run: ${{ github.action_path }}/tools/clone.sh "${{ inputs.repository }}" "${{ inputs.ref }}"
       shell: bash
