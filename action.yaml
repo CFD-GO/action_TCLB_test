@@ -19,5 +19,7 @@ inputs:
       [Learn more about creating and using encrypted secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
     default: ${{ github.token }}
 runs:
-  main: tools/test.sh
-    
+  using: 'composite'
+  steps:
+    - run: ${{ github.action_path }}/tools/test.sh
+      shell: bash
