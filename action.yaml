@@ -22,17 +22,17 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: rm "-rf" "*"
+    - uses: actions/checkout@v2
+      with:
+        repository: ${{ inputs.repository }}
+        ref: ${{ inputs.ref }}
+    - run: ./configure --disable-cuda
       shell: bash
-    - run: ${{ github.action_path }}/tools/clone.sh "${{ inputs.repository }}" "${{ inputs.ref }}"
-      shell: bash
-    - run: |
-        cd TCLB
-        ./configure --disable-cuda
-      shell: bash
+      id: configure
     - run: |
         cd TCLB
         make d2q9
+      id: make
       shell: bash
     - run: ${{ github.action_path }}/tools/test.sh
       shell: bash
