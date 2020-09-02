@@ -7,13 +7,18 @@ inputs:
   ref:
     description: branch or tag to test
     default: master
+  aptinstall:
+    description: install packages with APT
+    default: false
 runs:
   using: 'composite'
   steps:
-    - run: sudo apt-get install nvidia-profiler nvidia-cuda-dev nvidia-cuda-toolkit openmpi-bin libopenmpi-dev lcov time r-base-dev r-recommended
-      shell: bash
-      id: setup
-    - run: |
+    - run |
+        if test "${{ inputs.aptinstall }}" == "true"
+        then
+          sudo apt-get install nvidia-profiler nvidia-cuda-dev nvidia-cuda-toolkit  \
+                       openmpi-bin libopenmpi-dev lcov time r-base-dev r-recommended
+        fi
         DIR="TCLB"
         if test -d "$DIR"
         then
