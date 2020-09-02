@@ -10,9 +10,10 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - run: sudo apt-get install nvidia-profiler nvidia-cuda-dev nvidia-cuda-toolkit openmpi-bin libopenmpi-dev lcov time r-base-dev r-recommended
+      shell: bash
+      id: setup
     - run: |
-        CC=gcc
-        CXX=g++
         DIR="TCLB"
         if test -d "$DIR"
         then
@@ -24,3 +25,4 @@ runs:
         ./configure --disable-cuda
         make d2q9
       shell: bash
+      id: compile
