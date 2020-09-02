@@ -13,7 +13,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run |
+    - run: |
         if test "${{ inputs.aptinstall }}" == "true"
         then
           sudo apt-get install nvidia-profiler nvidia-cuda-dev nvidia-cuda-toolkit  \
