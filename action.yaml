@@ -11,6 +11,8 @@ runs:
   using: 'composite'
   steps:
     - run: |
+        CC=gcc
+        CXX=g++
         DIR="TCLB"
         if test -d "$DIR"
         then
