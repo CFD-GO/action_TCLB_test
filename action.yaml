@@ -18,5 +18,7 @@ runs:
         fi
         git clone --depth 1 --branch "${{ inputs.ref }}" "https://github.com/${{ inputs.repository }}.git" "$DIR"
         cd "$DIR"
+        make configure
         ./configure --disable-cuda
+        make d2q9
       shell: bash
