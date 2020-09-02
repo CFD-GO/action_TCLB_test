@@ -5,34 +5,18 @@ inputs:
     description: 'Repository name with owner. For example, actions/checkout'
     default: ${{ github.repository }}
   ref:
-    description: >
-      The branch, tag or SHA to checkout. When checking out the repository that
-      triggered a workflow, this defaults to the reference or SHA for that
-      event.  Otherwise, uses the default branch.
+    description: branch or tag to test
     default: master
-  token:
-    description: >
-      Personal access token (PAT) used to fetch the repository. The PAT is configured
-      with the local git config, which enables your scripts to run authenticated git
-      commands. The post-job step removes the PAT.
-      We recommend using a service account with the least permissions necessary.
-      Also when generating a new PAT, select the least scopes necessary.
-      [Learn more about creating and using encrypted secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
-    default: ${{ github.token }}
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@v2
-      with:
-        repository: ${{ inputs.repository }}
-        ref: ${{ inputs.ref }}
-    - run: ./configure --disable-cuda
-      shell: bash
-      id: configure
     - run: |
-        cd TCLB
-        make d2q9
-      id: make
-      shell: bash
-    - run: ${{ github.action_path }}/tools/test.sh
+        DIR="TCLB"
+        if test -d "$DIR"
+        then
+          rm -rf "$DIR"
+        fi
+        git clone --depth 1 --branch "${{ inputs.ref }}" "https://github.com/${{ inputs.repository }}.git" "$DIR"
+        cd "$DIR"
+        ./configure --disable-cuda
       shell: bash
