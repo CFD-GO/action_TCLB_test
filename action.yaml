@@ -7,8 +7,8 @@ inputs:
   ref:
     description: branch or tag to test
     default: master
-  aptinstall:
-    description: install packages with APT
+  install:
+    description: install dependencies
     default: false
   configureoptions:
     description: options for configure
@@ -20,12 +20,6 @@ runs:
   using: 'composite'
   steps:
     - run: |
-        if test "${{ inputs.aptinstall }}" == "true"
-        then
-          sudo apt-get update
-          sudo apt-get install nvidia-profiler nvidia-cuda-dev nvidia-cuda-toolkit  \
-                       openmpi-bin libopenmpi-dev lcov time r-base-dev r-recommended
-        fi
         DIR="TCLB"
         if test -d "$DIR"
         then
@@ -33,6 +27,12 @@ runs:
         fi
         git clone --depth 1 --branch "${{ inputs.ref }}" "https://github.com/${{ inputs.repository }}.git" "$DIR"
         cd "$DIR"
+        if test "${{ inputs.install }}" == "true"
+        then
+          sudo tools/install.sh r
+          sudo tools/install.sh openmpi
+          sudo tools/install.sh python-dev
+        fi
         tools/install.sh rdep
         make configure
         ./configure ${{ inputs.configureoptions }}
