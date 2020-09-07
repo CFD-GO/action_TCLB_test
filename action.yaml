@@ -10,6 +10,12 @@ inputs:
   aptinstall:
     description: install packages with APT
     default: false
+  configureoptions:
+    description: options for configure
+    default: --disable-cuda
+  model:
+    description: model to compile
+    default: d2q9
 runs:
   using: 'composite'
   steps:
@@ -28,7 +34,7 @@ runs:
         cd "$DIR"
         tools/install.sh rdep
         make configure
-        ./configure --disable-cuda
-        make d2q9
+        ./configure ${{ inputs.configureoptions }}
+        make "${{ inputs.model }}"
       shell: bash
       id: compile
