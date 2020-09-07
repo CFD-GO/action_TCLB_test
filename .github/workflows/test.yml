@@ -12,3 +12,10 @@ jobs:
       with:
         repository: CFD-GO/TCLB
         aptinstall: true
+  test-macos:
+    runs-on: macos-latest
+    steps:
+    - uses: CFD-GO/action_TCLB_test@master
+      with:
+        repository: CFD-GO/TCLB
+        aptinstall: true
