@@ -20,13 +20,15 @@ runs:
   using: 'composite'
   steps:
     - run: |
+        BRANCH="$(echo "${{ inputs.ref }}" | sed 's|refs/heads/||')"
+        REPO="${{ inputs.repository }}"
         DIR="TCLB"
         if test -d "$DIR"
         then
           rm -rf "$DIR"
         fi
-        echo "Cloning branch ${{ inputs.ref }} from ${{ inputs.repository }} into $DIR"
-        git clone --depth 1 --branch "${{ inputs.ref }}" "https://github.com/${{ inputs.repository }}.git" "$DIR"
+        echo "Cloning branch $BRANCH from $REPO into $DIR"
+        git clone --depth 1 --branch "$BRANCH" "https://github.com/$REPO.git" "$DIR"
         cd "$DIR"
         if test "${{ inputs.install }}" == "true"
         then
