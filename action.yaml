@@ -25,6 +25,7 @@ runs:
         then
           rm -rf "$DIR"
         fi
+        echo "Cloning branch ${{ inputs.ref }} from ${{ inputs.repository }} into $DIR"
         git clone --depth 1 --branch "${{ inputs.ref }}" "https://github.com/${{ inputs.repository }}.git" "$DIR"
         cd "$DIR"
         if test "${{ inputs.install }}" == "true"
