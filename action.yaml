@@ -22,6 +22,7 @@ runs:
     - run: |
         if test "${{ inputs.aptinstall }}" == "true"
         then
+          sudo apt-get update
           sudo apt-get install nvidia-profiler nvidia-cuda-dev nvidia-cuda-toolkit  \
                        openmpi-bin libopenmpi-dev lcov time r-base-dev r-recommended
         fi
