@@ -32,6 +32,7 @@ runs:
         cd "$DIR"
         if test "${{ inputs.install }}" == "true"
         then
+          tools/install.sh --sudo essentials
           tools/install.sh --sudo r
           tools/install.sh --sudo openmpi
           tools/install.sh --sudo python-dev
