@@ -32,9 +32,9 @@ runs:
         cd "$DIR"
         if test "${{ inputs.install }}" == "true"
         then
-          sudo tools/install.sh r
-          sudo tools/install.sh openmpi
-          sudo tools/install.sh python-dev
+          tools/install.sh --sudo r
+          tools/install.sh --sudo openmpi
+          tools/install.sh --sudo python-dev
         fi
         tools/install.sh rdep
         make configure
