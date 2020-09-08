@@ -37,6 +37,7 @@ runs:
           tools/install.sh --sudo openmpi
           tools/install.sh --sudo python-dev
         fi
+        source tools/env.sh # needed only on macos
         tools/install.sh rdep
         make configure
         ./configure ${{ inputs.configureoptions }}
