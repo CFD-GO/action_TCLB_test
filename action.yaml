@@ -22,7 +22,9 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: |
+    - shell: bash
+      id: compile
+      run: |
         BRANCH="$(echo "${{ inputs.ref }}" | sed 's|refs/heads/||')"
         REPO="${{ inputs.repository }}"
         DIR="TCLB"
@@ -40,7 +42,7 @@ runs:
           tools/install.sh --sudo essentials
           tools/install.sh --sudo r
           tools/install.sh --sudo openmpi
-          tools/install.sh --sudo python-dev
+          # tools/install.sh --sudo python-dev
         fi
         if test -z "$CLUSTER"
         then
@@ -54,5 +56,3 @@ runs:
           p/config -y
           p/make ${{ inputs.model }}
         fi
-      shell: bash
-      id: compile
