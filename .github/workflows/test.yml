@@ -7,15 +7,10 @@ on:
 jobs:
   test-ubuntu:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
     steps:
     - uses: CFD-GO/action_TCLB_test@master
       with:
         repository: CFD-GO/TCLB
         install: true
-  test-macos:
-    runs-on: macos-latest
-    steps:
-    - uses: CFD-GO/action_TCLB_test@master
-      with:
-        repository: CFD-GO/TCLB
-        aptinstall: true
