@@ -22,20 +22,17 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - uses: actions/checkout@v3
+      with:
+        repository: ${{ inputs.repository }}
+        ref: ${{ inputs.ref }}
+        path: 'TCLB'
     - shell: bash
       id: compile
       run: |
-        BRANCH="$(echo "${{ inputs.ref }}" | sed 's|refs/heads/||')"
-        REPO="${{ inputs.repository }}"
         DIR="TCLB"
         INSTALL="$(test "${{ inputs.install }}" == "true" && echo true || echo false)"
         CLUSTER="${{ inputs.cluster }}"
-        if test -d "$DIR"
-        then
-          rm -rf "$DIR"
-        fi
-        echo "Cloning branch $BRANCH from $REPO into $DIR"
-        git clone --depth 1 --branch "$BRANCH" "https://github.com/$REPO.git" "$DIR"
         cd "$DIR"
         if $INSTALL
         then
